@@ -3,6 +3,8 @@
 
     <string name="app_name">OPDS Browser</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="refresh">refresh</string>
+    <string name="cover">cover</string>
+    <string name="icon">icon</string>
 
 </resources>
