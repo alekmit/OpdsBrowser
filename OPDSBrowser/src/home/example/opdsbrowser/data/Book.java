@@ -14,7 +14,10 @@ public final class Book {
 	
 	private String annotation;
 	
+	private String link;
+	
 	private boolean local;
+	
 
 	public String getCover() {
 		return cover;
@@ -62,6 +65,14 @@ public final class Book {
 
 	public void setAnnotation(String annotation) {
 		this.annotation = annotation;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 	public boolean isLocal() {
