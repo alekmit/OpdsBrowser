@@ -18,6 +18,8 @@ public final class OpdsHandler extends DefaultHandler {
 	
 	private String value;
 	
+	private String icon;
+	
 	public OpdsHandler(){
 		books = new ArrayList<Book>();
 	}
@@ -35,12 +37,17 @@ public final class OpdsHandler extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qname)
 			throws SAXException {
+		if (is(qname, IOpdsService.XML_ICON)){
+			icon = IOpdsService.FLIBUSTA_URL + value;
+			return;
+		}
+		if (book == null) return;
 		if (is(qname, IOpdsService.XML_ENTRY)){
+			book.setCover(icon);
 			books.add(book);
+			book = null;
 		} else if (is(qname, IOpdsService.XML_TITLE)){
 			book.setTitle(value);
-		} else if(is(qname, IOpdsService.XML_LINK)){
-			book.setLink(value);
 		}
 	}
 
@@ -51,6 +58,10 @@ public final class OpdsHandler extends DefaultHandler {
 		if (is(qname, IOpdsService.XML_ENTRY)){
 			book = new Book();
 		}
+		if(book != null && is(qname, IOpdsService.XML_LINK)){
+			book.setLink(IOpdsService.FLIBUSTA_URL + attributes.getValue(IOpdsService.XML_HREF));
+		}
+		
 	}
 
 	public List<Book> getBooks() {

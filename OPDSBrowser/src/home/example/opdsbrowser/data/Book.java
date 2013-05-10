@@ -1,7 +1,13 @@
 package home.example.opdsbrowser.data;
 
-public final class Book {
+import java.io.Serializable;
+
+import android.graphics.Bitmap;
+
+public final class Book implements Serializable {
 	
+	private static final long serialVersionUID = -3115384457586906442L;
+
 	private String cover;
 	
 	private String author;
@@ -17,6 +23,8 @@ public final class Book {
 	private String link;
 	
 	private boolean local;
+	
+	private Bitmap image;
 	
 
 	public String getCover() {
@@ -81,6 +89,14 @@ public final class Book {
 
 	public void setLocal(boolean local) {
 		this.local = local;
+	}
+
+	public Bitmap getImage() {
+		return image;
+	}
+
+	public void setImage(Bitmap image) {
+		this.image = image;
 	}
 
 }

@@ -1,20 +1,42 @@
 package home.example.opdsbrowser;
 
+import java.util.List;
+
+import home.example.opdsbrowser.R;
+import home.example.opdsbrowser.data.Book;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 
 public class MainActivity extends Activity {
+	
+	private ListView listView;
+	
+	/*private BroadcastReceiver receiver = new BroadcastReceiver(){
+		@Override
+		public void onReceive(Context ctx, Intent intent) {
+			Bundle bundle = intent.getExtras();
+			Book book = (Book) bundle.getSerializable("books");
+		}
+	};*/
+
+	public ListView getListView() {
+		return listView;
+	}
 
 	private OnClickListener refreshListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View view) {
-			startService(new Intent(view.getContext(), OpdsService.class));
+			//startService(new Intent(view.getContext(), OpdsService.class));
 		}
 
 	};
@@ -25,6 +47,10 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		Button refbtn = (Button) findViewById(R.id.refreshBtn);
 		refbtn.setOnClickListener(refreshListener);
+		listView = (ListView) findViewById(R.id.listView1);
+		//IntentFilter filter = new IntentFilter("android.intent.action.MAIN");
+		//this.registerReceiver(receiver, filter );
+		startService(new Intent(this, OpdsService.class));
 	}
 
 	@Override

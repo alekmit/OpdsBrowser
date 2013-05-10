@@ -2,7 +2,7 @@ package home.example.opdsbrowser.utils;
 
 public interface IOpdsService {
 	
-	String FLIBUSTA_URL = "http://flibusta.net/opds/";
+	String FLIBUSTA_URL = "http://flibusta.net";
 	
 	String XML_TITLE = "title";
 	
@@ -15,5 +15,9 @@ public interface IOpdsService {
 	String XML_CONTENT = "content";
 	
 	String XML_LINK = "link";
+	
+	String XML_HREF = "href";
+
+	String XML_ICON = "icon";
 
 }

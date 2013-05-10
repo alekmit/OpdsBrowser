@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="OpdsService"></service>
+        <service android:name="OpdsService" android:icon="@drawable/ic_launcher"></service>
     </application>
 
 </manifest>
