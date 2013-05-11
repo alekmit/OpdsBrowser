@@ -8,14 +8,14 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
     
-    <Button
+    <!--Button
          android:id="@+id/refreshBtn"
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"
          android:layout_marginBottom="8dp"
          android:layout_marginLeft="8dp"
          android:layout_marginRight="8dp"
-         android:text="@string/refresh" />
+         android:text="@string/refresh" /-->
     
      <ListView
         android:id="@+id/listView1"

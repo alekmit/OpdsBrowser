@@ -1,12 +1,8 @@
 package home.example.opdsbrowser.data;
 
-import java.io.Serializable;
-
 import android.graphics.Bitmap;
 
-public final class Book implements Serializable {
-	
-	private static final long serialVersionUID = -3115384457586906442L;
+public final class Book {
 
 	private String cover;
 	

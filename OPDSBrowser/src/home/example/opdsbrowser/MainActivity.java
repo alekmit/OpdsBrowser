@@ -1,9 +1,7 @@
 package home.example.opdsbrowser;
 
-import java.util.List;
-
 import home.example.opdsbrowser.R;
-import home.example.opdsbrowser.data.Book;
+import home.example.opdsbrowser.io.BooksAsynkTask;
 import home.example.opdsbrowser.utils.IOpdsService;
 import android.os.Bundle;
 import android.app.Activity;
@@ -19,15 +17,26 @@ import android.widget.ListView;
 
 public class MainActivity extends Activity {
 	
-	private ListView listView;
+	public static final String BROADCAST_ACTION = "home.example.opdsbrowser.bookservice";
 	
-	/*private BroadcastReceiver receiver = new BroadcastReceiver(){
+	public static final String ID_XML = "xml";
+	
+	private ListView listView;
+	private BooksAsynkTask booksTask;
+	
+	private BroadcastReceiver breceiver = new BroadcastReceiver(){
 		@Override
 		public void onReceive(Context ctx, Intent intent) {
 			Bundle bundle = intent.getExtras();
-			Book book = (Book) bundle.getSerializable("books");
+			String xml = bundle.getString(ID_XML);
+			startParser(xml);
 		}
-	};*/
+	};
+	
+	private void startParser(String xml){
+		booksTask = new BooksAsynkTask(this);
+		booksTask.execute(xml);
+	}
 
 	public ListView getListView() {
 		return listView;
@@ -46,9 +55,12 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Button refbtn = (Button) findViewById(R.id.refreshBtn);
+		/*Button refbtn = (Button) findViewById(R.id.refreshBtn);
 		refbtn.setOnClickListener(refreshListener);
+		refbtn.setVisibility(Button.INVISIBLE);*/
 		listView = (ListView) findViewById(R.id.listView1);
+		IntentFilter ifilter = new IntentFilter(BROADCAST_ACTION);
+	    registerReceiver(breceiver, ifilter);
 		Intent intent = new Intent(this, OpdsService.class);
 		intent.putExtra("url", IOpdsService.FLIBUSTA_URL + "/opds");
 		startService(intent);

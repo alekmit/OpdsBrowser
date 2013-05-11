@@ -1,12 +1,7 @@
 package home.example.opdsbrowser.io;
 
-import home.example.opdsbrowser.data.Book;
-
-import java.io.ByteArrayInputStream;
+import home.example.opdsbrowser.MainActivity;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,65 +9,39 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.app.Service;
+import android.content.Intent;
 import android.os.AsyncTask;
 
-public final class OpdsAsynkTask extends AsyncTask<String, Integer, List<Book>> {
+public final class OpdsAsynkTask extends AsyncTask<String, Integer, String> {
 
-	private Context context;
+	private Service context;
 
-	// private BookArrayAdapter listAdapter;
-
-	public OpdsAsynkTask(Context context) {
+	public OpdsAsynkTask(Service context) {
 		this.context = context;
 	}
 
 	@Override
-     protected void onPostExecute(List<Book> books) {
-
+     protected void onPostExecute(String opds) {
+		Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
+		intent.putExtra(MainActivity.ID_XML, opds);
+		context.sendBroadcast(intent);
      }
 
 	@Override
-	protected List<Book> doInBackground(String... args) {
-		List<Book> books = null;
+	protected String doInBackground(String... args) {
 		String url = args[0];
-		if (url != null) {
-			InputStream is = new ByteArrayInputStream(getXML(url).getBytes());
-			books = OpdsParser.parse(is);
-		}
-		for (Book book : books) {
-			if (book.getCover() == null)
-				continue;
-			String imageURL = book.getCover();
-			Bitmap bitmap = null;
-			BitmapFactory.Options bmOpts = new BitmapFactory.Options();
-			bmOpts.inSampleSize = 1;
-			try {
-				bitmap = BitmapFactory.decodeStream(
-						new URL(imageURL).openStream(), null, bmOpts);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			book.setImage(bitmap);
-		}
-		return books;
-	}
-
-	private String getXML(String url) {
-		String xml = null;
+		String opds = null;
 		try {
 			DefaultHttpClient http = new DefaultHttpClient();
 			HttpGet get = new HttpGet(url);
 			HttpResponse resp = http.execute(get);
 			HttpEntity entity = resp.getEntity();
-			xml = EntityUtils.toString(entity);
+			opds = EntityUtils.toString(entity);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(xml);
-		return xml;
+		return opds;
 	}
 
 }
