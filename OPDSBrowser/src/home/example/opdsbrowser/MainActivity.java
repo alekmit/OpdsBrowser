@@ -10,9 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 
 public class MainActivity extends Activity {
@@ -42,14 +39,13 @@ public class MainActivity extends Activity {
 		return listView;
 	}
 
-	private OnClickListener refreshListener = new OnClickListener() {
+	/*private OnClickListener refreshListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View view) {
-			//startService(new Intent(view.getContext(), OpdsService.class));
 		}
 
-	};
+	};*/
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
