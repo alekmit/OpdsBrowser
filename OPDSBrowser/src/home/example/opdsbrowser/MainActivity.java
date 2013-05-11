@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
 		listView.setOnItemClickListener(goListener);
 		IntentFilter ifilter = new IntentFilter(BROADCAST_ACTION);
 	    registerReceiver(breceiver, ifilter);
-		useService(IOpdsService.FLIBUSTA_URL + "/opds");
+		useService("/opds");
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
 	
 	private void useService(String url){
 		Intent intent = new Intent(this, OpdsService.class);
-		intent.putExtra("url", url);
+		intent.putExtra("url", IOpdsService.FLIBUSTA_URL + url);
 		startService(intent);
 	}
 

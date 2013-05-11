@@ -1,6 +1,7 @@
 package home.example.opdsbrowser.io;
 
 import home.example.opdsbrowser.data.Book;
+import home.example.opdsbrowser.utils.IOpdsService;
 import home.example.opdsbrowser.view.BookArrayAdapter;
 import home.example.opdsbrowser.MainActivity;
 
@@ -47,13 +48,13 @@ public final class BooksAsynkTask extends AsyncTask<String, Integer, List<Book>>
 		for (Book book : books) {
 			if (book.getCover() == null)
 				continue;
-			String imageURL = book.getCover();
+			String imgUrl = book.getCover();
 			Bitmap bitmap = null;
 			BitmapFactory.Options bmOpts = new BitmapFactory.Options();
 			bmOpts.inSampleSize = 1;
 			try {
 				bitmap = BitmapFactory.decodeStream(
-						new URL(imageURL).openStream(), null, bmOpts);
+						new URL(IOpdsService.FLIBUSTA_URL + imgUrl).openStream(), null, bmOpts);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
