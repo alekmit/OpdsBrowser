@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ListView;
 
 public class MainActivity extends Activity {
@@ -46,6 +48,14 @@ public class MainActivity extends Activity {
 		}
 
 	};*/
+	
+	private OnClickListener goListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View view) {
+		}
+
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

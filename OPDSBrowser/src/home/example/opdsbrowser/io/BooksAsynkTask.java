@@ -10,6 +10,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,7 +42,7 @@ public final class BooksAsynkTask extends AsyncTask<String, Integer, List<Book>>
 		String opds = args[0];
 		if (opds != null) {
 			InputStream is = new ByteArrayInputStream(opds.getBytes());
-			books = OpdsParser.parse(is);
+			books = parse(is);
 		}
 		for (Book book : books) {
 			if (book.getCover() == null)
@@ -56,5 +61,19 @@ public final class BooksAsynkTask extends AsyncTask<String, Integer, List<Book>>
 		}
 		return books;
 	}
+	
+	public List<Book> parse(InputStream is) {
+        List<Book> books = null;
+        try {
+            XMLReader reader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
+            OpdsHandler handler = new OpdsHandler();
+            reader.setContentHandler(handler);
+            reader.parse(new InputSource(is));
+            books = handler.getBooks();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return books;
+    }
 
 }
