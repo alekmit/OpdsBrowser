@@ -4,7 +4,6 @@ import java.util.List;
 
 import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.io.OpdsAsynkTask;
-import home.example.opdsbrowser.utils.IOpdsService;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -15,7 +14,7 @@ public class OpdsService extends Service {
 	
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		opdsTask = new OpdsAsynkTask(this);
-		opdsTask.execute(IOpdsService.FLIBUSTA_URL + "/opds"); //hard-coded -TBD
+		opdsTask.execute(intent.getStringExtra("url")); //hard-coded -TBD
 	    return super.onStartCommand(intent, flags, startId);
 	  }
 

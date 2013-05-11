@@ -4,6 +4,7 @@ import java.util.List;
 
 import home.example.opdsbrowser.R;
 import home.example.opdsbrowser.data.Book;
+import home.example.opdsbrowser.utils.IOpdsService;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -48,9 +49,9 @@ public class MainActivity extends Activity {
 		Button refbtn = (Button) findViewById(R.id.refreshBtn);
 		refbtn.setOnClickListener(refreshListener);
 		listView = (ListView) findViewById(R.id.listView1);
-		//IntentFilter filter = new IntentFilter("android.intent.action.MAIN");
-		//this.registerReceiver(receiver, filter );
-		startService(new Intent(this, OpdsService.class));
+		Intent intent = new Intent(this, OpdsService.class);
+		intent.putExtra("url", IOpdsService.FLIBUSTA_URL + "/opds");
+		startService(intent);
 	}
 
 	@Override

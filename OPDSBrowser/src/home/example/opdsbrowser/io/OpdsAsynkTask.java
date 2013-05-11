@@ -1,8 +1,6 @@
 package home.example.opdsbrowser.io;
 
-import home.example.opdsbrowser.MainActivity;
 import home.example.opdsbrowser.data.Book;
-import home.example.opdsbrowser.view.BookArrayAdapter;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
