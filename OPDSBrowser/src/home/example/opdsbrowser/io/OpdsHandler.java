@@ -37,13 +37,12 @@ public final class OpdsHandler extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qname)
 			throws SAXException {
-		if (is(qname, IOpdsService.XML_ICON)){
+		if (book == null && is(qname, IOpdsService.XML_ICON)){
 			icon = IOpdsService.FLIBUSTA_URL + value;
 			return;
 		}
 		if (book == null) return;
 		if (is(qname, IOpdsService.XML_ENTRY)){
-			book.setCover(icon);
 			books.add(book);
 			book = null;
 		} else if (is(qname, IOpdsService.XML_TITLE)){
@@ -53,13 +52,18 @@ public final class OpdsHandler extends DefaultHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qname,
-			Attributes attributes) throws SAXException {
+			Attributes attr) throws SAXException {
 		value = null;
 		if (is(qname, IOpdsService.XML_ENTRY)){
 			book = new Book();
+			book.setCover(icon);
 		}
 		if(book != null && is(qname, IOpdsService.XML_LINK)){
-			book.setLink(IOpdsService.FLIBUSTA_URL + attributes.getValue(IOpdsService.XML_HREF));
+			if (attr.getValue("type").startsWith("application/atom+xml")){
+				book.setLink(IOpdsService.FLIBUSTA_URL + attr.getValue(IOpdsService.XML_HREF));
+			} else if (is(attr.getValue("type"), "image/jpeg") && attr.getValue("rel").endsWith("thumbnail")){
+				book.setCover(IOpdsService.FLIBUSTA_URL + attr.getValue(IOpdsService.XML_HREF));
+			}
 		}
 		
 	}

@@ -1,6 +1,7 @@
 package home.example.opdsbrowser;
 
 import home.example.opdsbrowser.R;
+import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.io.BooksAsynkTask;
 import home.example.opdsbrowser.utils.IOpdsService;
 import android.os.Bundle;
@@ -11,7 +12,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class MainActivity extends Activity {
@@ -49,13 +51,18 @@ public class MainActivity extends Activity {
 
 	};*/
 	
-	private OnClickListener goListener = new OnClickListener() {
+	OnItemClickListener goListener = new OnItemClickListener() {
 
 		@Override
-		public void onClick(View view) {
+		public void onItemClick(AdapterView<?> adapter, 
+				View view, int position, long arg) {
+			Book b = (Book) listView.getAdapter().getItem(position);
+			String url = b.getLink();
+			useService(url);
 		}
-
+		
 	};
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,17 +72,22 @@ public class MainActivity extends Activity {
 		refbtn.setOnClickListener(refreshListener);
 		refbtn.setVisibility(Button.INVISIBLE);*/
 		listView = (ListView) findViewById(R.id.listView1);
+		listView.setOnItemClickListener(goListener);
 		IntentFilter ifilter = new IntentFilter(BROADCAST_ACTION);
 	    registerReceiver(breceiver, ifilter);
-		Intent intent = new Intent(this, OpdsService.class);
-		intent.putExtra("url", IOpdsService.FLIBUSTA_URL + "/opds");
-		startService(intent);
+		useService(IOpdsService.FLIBUSTA_URL + "/opds");
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	private void useService(String url){
+		Intent intent = new Intent(this, OpdsService.class);
+		intent.putExtra("url", url);
+		startService(intent);
 	}
 
 }
