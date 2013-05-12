@@ -3,16 +3,12 @@ package home.example.opdsbrowser.view;
 import home.example.opdsbrowser.R;
 import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.data.OpdsContext;
-import home.example.opdsbrowser.utils.IOpdsService;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

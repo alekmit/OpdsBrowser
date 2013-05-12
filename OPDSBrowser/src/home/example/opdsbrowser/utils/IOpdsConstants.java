@@ -1,6 +1,6 @@
 package home.example.opdsbrowser.utils;
 
-public interface IOpdsService {
+public interface IOpdsConstants {
 	
 	String FLIBUSTA_URL = "http://flibusta.net";
 	

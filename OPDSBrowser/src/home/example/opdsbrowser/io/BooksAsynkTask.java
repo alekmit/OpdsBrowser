@@ -2,7 +2,7 @@ package home.example.opdsbrowser.io;
 
 import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.data.OpdsContext;
-import home.example.opdsbrowser.utils.IOpdsService;
+import home.example.opdsbrowser.utils.IOpdsConstants;
 import home.example.opdsbrowser.view.BookArrayAdapter;
 import home.example.opdsbrowser.MainActivity;
 
@@ -79,7 +79,7 @@ public final class BooksAsynkTask extends AsyncTask<String, Integer, List<Book>>
 		bmOpts.inSampleSize = 16;
 		try {
 			bitmap = BitmapFactory.decodeStream(
-					new URL(IOpdsService.FLIBUSTA_URL + imgUrl).openStream(), null, bmOpts);
+					new URL(IOpdsConstants.FLIBUSTA_URL + imgUrl).openStream(), null, bmOpts);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -5,7 +5,7 @@ import java.util.Stack;
 import home.example.opdsbrowser.R;
 import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.io.BooksAsynkTask;
-import home.example.opdsbrowser.utils.IOpdsService;
+import home.example.opdsbrowser.utils.IOpdsConstants;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
 	
 	private void useService(String url){
 		Intent intent = new Intent(this, OpdsService.class);
-		intent.putExtra("url", IOpdsService.FLIBUSTA_URL + url);
+		intent.putExtra("url", IOpdsConstants.FLIBUSTA_URL + url);
 		startService(intent);
 	}
 	

@@ -2,7 +2,7 @@ package home.example.opdsbrowser.io;
 
 import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.data.OpdsContext;
-import home.example.opdsbrowser.utils.IOpdsService;
+import home.example.opdsbrowser.utils.IOpdsConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,16 +38,16 @@ public final class OpdsHandler extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qname)
 			throws SAXException {
-		if (book == null && icon == null && is(qname, IOpdsService.XML_ICON)){
+		if (book == null && icon == null && is(qname, IOpdsConstants.XML_ICON)){
 			icon = value;
 			OpdsContext.getContext().setIcon(icon);
 			return;
 		}
 		if (book == null) return;
-		if (is(qname, IOpdsService.XML_ENTRY)){
+		if (is(qname, IOpdsConstants.XML_ENTRY)){
 			books.add(book);
 			book = null;
-		} else if (is(qname, IOpdsService.XML_TITLE)){
+		} else if (is(qname, IOpdsConstants.XML_TITLE)){
 			book.setTitle(value);
 		}
 	}
@@ -56,11 +56,11 @@ public final class OpdsHandler extends DefaultHandler {
 	public void startElement(String uri, String localName, String qname,
 			Attributes attr) throws SAXException {
 		value = null;
-		if (is(qname, IOpdsService.XML_ENTRY)){
+		if (is(qname, IOpdsConstants.XML_ENTRY)){
 			book = new Book();
 		}
-		if(is(qname, IOpdsService.XML_LINK)){
-			String lnk = attr.getValue(IOpdsService.XML_HREF);
+		if(is(qname, IOpdsConstants.XML_LINK)){
+			String lnk = attr.getValue(IOpdsConstants.XML_HREF);
 			if (book != null){
 				if (attr.getValue("type").startsWith("application/atom+xml")){
 					book.setLink(lnk);
