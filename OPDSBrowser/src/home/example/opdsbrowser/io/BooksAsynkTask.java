@@ -47,33 +47,15 @@ public final class BooksAsynkTask extends AsyncTask<String, Integer, List<Book>>
 			books = parse(is);
 		}
 		String icon = OpdsContext.getContext().getIcon();
-		if (icon != null){
-			Bitmap bitmap = null;
-			BitmapFactory.Options bmOpts = new BitmapFactory.Options();
-			bmOpts.inSampleSize = 1;
-			try {
-				bitmap = BitmapFactory.decodeStream(
-						new URL(IOpdsService.FLIBUSTA_URL + icon).openStream(), null, bmOpts);
-				OpdsContext.getContext().setImage(bitmap);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		if (OpdsContext.getContext().getImage() == null && icon != null){
+			OpdsContext.getContext().setImage(getImage(icon));
 		}
-		/*for (Book book : books) {
-			if (book.getCover() == null)
-				continue;
+		for (Book book : books) {
 			String imgUrl = book.getCover();
-			Bitmap bitmap = null;
-			BitmapFactory.Options bmOpts = new BitmapFactory.Options();
-			bmOpts.inSampleSize = 1;
-			try {
-				bitmap = BitmapFactory.decodeStream(
-						new URL(IOpdsService.FLIBUSTA_URL + imgUrl).openStream(), null, bmOpts);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			book.setImage(bitmap);
-		}*/
+			if (imgUrl == null)
+				continue;
+			book.setImage(getImage(imgUrl));
+		}
 		return books;
 	}
 	
@@ -90,5 +72,18 @@ public final class BooksAsynkTask extends AsyncTask<String, Integer, List<Book>>
         }
         return books;
     }
+	
+	private Bitmap getImage(String imgUrl){
+		Bitmap bitmap = null;
+		BitmapFactory.Options bmOpts = new BitmapFactory.Options();
+		bmOpts.inSampleSize = 16;
+		try {
+			bitmap = BitmapFactory.decodeStream(
+					new URL(IOpdsService.FLIBUSTA_URL + imgUrl).openStream(), null, bmOpts);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return bitmap;
+	}
 
 }

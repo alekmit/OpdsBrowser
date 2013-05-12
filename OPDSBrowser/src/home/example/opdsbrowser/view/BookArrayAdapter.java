@@ -59,17 +59,19 @@ public class BookArrayAdapter extends ArrayAdapter<Book> {
 			viewItem = (ViewItem) row.getTag();
 		}
         Book book = (Book) getItem(position);
-        if (book.getImage() == null){
+        /*if (book.getImage() == null){
         	setCover(book);
-        }
-        viewItem.cover.setImageBitmap(book.getImage());
+        }*/
+        Bitmap pic = book.getImage();
+        viewItem.cover.setImageBitmap(pic != null ? 
+        		pic : OpdsContext.getContext().getImage());
         viewItem.author.setText(book.getAuthor());
         viewItem.title.setText(book.getTitle());
         viewItem.genre.setText(book.getGenre());
         return row;
     }
 	
-	private void setCover(Book book){
+	/*private void setCover(Book book){
 		if (book.getCover() == null){
 			book.setImage(OpdsContext.getContext().getImage());
 			return;
@@ -86,6 +88,6 @@ public class BookArrayAdapter extends ArrayAdapter<Book> {
 		}
 		book.setImage(bitmap);
 		
-	}
+	}*/
 
 }
