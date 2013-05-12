@@ -1,5 +1,7 @@
 package home.example.opdsbrowser;
 
+import java.util.Stack;
+
 import home.example.opdsbrowser.R;
 import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.io.BooksAsynkTask;
@@ -22,8 +24,12 @@ public class MainActivity extends Activity {
 	
 	public static final String ID_XML = "xml";
 	
+	public static final String ROOT_URL = "/opds";
+	
 	private ListView listView;
 	private BooksAsynkTask booksTask;
+	
+	private Stack<String> navStack = new Stack<String>();
 	
 	private BroadcastReceiver breceiver = new BroadcastReceiver(){
 		@Override
@@ -59,14 +65,20 @@ public class MainActivity extends Activity {
 			Book b = (Book) listView.getAdapter().getItem(position);
 			String url = b.getLink();
 			useService(url);
+			navStack.push(url);
 		}
 		
 	};
+	
+	private void init(){
+		navStack = new Stack<String>();
+	}
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		init();
 		setContentView(R.layout.activity_main);
 		/*Button refbtn = (Button) findViewById(R.id.refreshBtn);
 		refbtn.setOnClickListener(refreshListener);
@@ -75,7 +87,8 @@ public class MainActivity extends Activity {
 		listView.setOnItemClickListener(goListener);
 		IntentFilter ifilter = new IntentFilter(BROADCAST_ACTION);
 	    registerReceiver(breceiver, ifilter);
-		useService("/opds");
+		useService(ROOT_URL);
+		navStack.push(ROOT_URL);
 	}
 
 	@Override
@@ -89,5 +102,16 @@ public class MainActivity extends Activity {
 		intent.putExtra("url", IOpdsService.FLIBUSTA_URL + url);
 		startService(intent);
 	}
+	
+	 @Override
+	 public void onBackPressed() {
+		 if (!navStack.isEmpty()){
+			 String url = navStack.pop();
+			 useService(url);
+		 } else{
+			 super.onBackPressed();
+		 }
+		 return;
+	 }
 
 }

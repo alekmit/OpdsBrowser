@@ -38,9 +38,9 @@ public final class OpdsHandler extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qname)
 			throws SAXException {
-		if (book == null && is(qname, IOpdsService.XML_ICON)){
+		if (book == null && icon == null && is(qname, IOpdsService.XML_ICON)){
 			icon = value;
-			//OpdsContext.getContext().setNext(null);
+			OpdsContext.getContext().setIcon(icon);
 			return;
 		}
 		if (book == null) return;
@@ -58,7 +58,6 @@ public final class OpdsHandler extends DefaultHandler {
 		value = null;
 		if (is(qname, IOpdsService.XML_ENTRY)){
 			book = new Book();
-			book.setCover(icon);
 		}
 		if(is(qname, IOpdsService.XML_LINK)){
 			String lnk = attr.getValue(IOpdsService.XML_HREF);

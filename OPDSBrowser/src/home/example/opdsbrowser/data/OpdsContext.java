@@ -1,5 +1,7 @@
 package home.example.opdsbrowser.data;
 
+import android.graphics.Bitmap;
+
 public class OpdsContext {
 	
 	private static OpdsContext inst = new OpdsContext();
@@ -13,6 +15,10 @@ public class OpdsContext {
 	private String prev;
 	
 	private String next;
+	
+	private String icon;
+	
+	private Bitmap image;
 	
 	public String getNext() {
 		return next;
@@ -28,6 +34,22 @@ public class OpdsContext {
 
 	public void setPrev(String prev) {
 		this.prev = prev;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public Bitmap getImage() {
+		return image;
+	}
+
+	public void setImage(Bitmap image) {
+		this.image = image;
 	}
 
 }
