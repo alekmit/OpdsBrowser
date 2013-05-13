@@ -9,8 +9,7 @@ public class BookWrapper implements Parcelable {
 
 		@Override
 		public Object createFromParcel(Parcel source) {
-			// TODO Auto-generated method stub
-			return null;
+			return source;
 		}
 
 		@Override
@@ -23,7 +22,7 @@ public class BookWrapper implements Parcelable {
 	
 	private Book book;
 	
-	public BookWrapper(Book book){
+	private BookWrapper(Parcel parcel){
 		this.book = book;
 	}
 

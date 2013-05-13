@@ -5,7 +5,7 @@ import java.util.Stack;
 import home.example.opdsbrowser.R;
 import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.io.BooksAsynkTask;
-import home.example.opdsbrowser.utils.IOpdsConstants;
+import home.example.opdsbrowser.utils.OpdsConstants;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -20,12 +20,6 @@ import android.widget.ListView;
 
 public class MainActivity extends Activity {
 	
-	public static final String BROADCAST_ACTION = "home.example.opdsbrowser.bookservice";
-	
-	public static final String ID_XML = "xml";
-	
-	public static final String ROOT_URL = "/opds";
-	
 	private ListView listView;
 	private BooksAsynkTask booksTask;
 	
@@ -35,8 +29,16 @@ public class MainActivity extends Activity {
 		@Override
 		public void onReceive(Context ctx, Intent intent) {
 			Bundle bundle = intent.getExtras();
-			String xml = bundle.getString(ID_XML);
-			startParser(xml);
+			int action = intent.getExtras().getInt(OpdsConstants.ACTION_ID);
+			switch (action){
+			case OpdsConstants.ID_ACTION_XML:
+				String xml = new String(bundle.getByteArray(OpdsConstants.ID_DATA));
+				startParser(xml);
+				break;
+			case OpdsConstants.ID_ACTION_BYTES:
+				break;
+			}
+			
 		}
 	};
 	
@@ -85,10 +87,10 @@ public class MainActivity extends Activity {
 		refbtn.setVisibility(Button.INVISIBLE);*/
 		listView = (ListView) findViewById(R.id.listView1);
 		listView.setOnItemClickListener(goListener);
-		IntentFilter ifilter = new IntentFilter(BROADCAST_ACTION);
+		IntentFilter ifilter = new IntentFilter(OpdsConstants.BROADCAST_ACTION);
 	    registerReceiver(breceiver, ifilter);
-		useService(ROOT_URL);
-		navStack.push(ROOT_URL);
+		useService(OpdsConstants.ROOT_URL);
+		navStack.push(OpdsConstants.ROOT_URL);
 	}
 
 	@Override
@@ -99,7 +101,8 @@ public class MainActivity extends Activity {
 	
 	private void useService(String url){
 		Intent intent = new Intent(this, OpdsService.class);
-		intent.putExtra("url", IOpdsConstants.FLIBUSTA_URL + url);
+		intent.putExtra(OpdsConstants.ACTION_ID, OpdsConstants.ID_ACTION_XML);
+		intent.putExtra(OpdsConstants.URL_ID, OpdsConstants.FLIBUSTA_URL + url);
 		startService(intent);
 	}
 	

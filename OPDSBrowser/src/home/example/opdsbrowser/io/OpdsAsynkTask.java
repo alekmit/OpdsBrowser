@@ -1,6 +1,7 @@
 package home.example.opdsbrowser.io;
 
-import home.example.opdsbrowser.MainActivity;
+import home.example.opdsbrowser.utils.OpdsConstants;
+
 import java.io.IOException;
 
 import org.apache.http.HttpEntity;
@@ -13,35 +14,38 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-public final class OpdsAsynkTask extends AsyncTask<String, Integer, String> {
+public final class OpdsAsynkTask extends AsyncTask<String, Integer, byte[]> {
 
 	private Service context;
+	private int action;
 
-	public OpdsAsynkTask(Service context) {
+	public OpdsAsynkTask(Service context, int action) {
 		this.context = context;
+		this.action = action;
 	}
 
 	@Override
-     protected void onPostExecute(String opds) {
-		Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
-		intent.putExtra(MainActivity.ID_XML, opds);
+     protected void onPostExecute(byte[] result) {
+		Intent intent = new Intent(OpdsConstants.BROADCAST_ACTION);
+		intent.putExtra(OpdsConstants.ACTION_ID, action);
+		intent.putExtra(OpdsConstants.ID_DATA, result);
 		context.sendBroadcast(intent);
      }
 
 	@Override
-	protected String doInBackground(String... args) {
+	protected byte[] doInBackground(String... args) {
 		String url = args[0];
-		String opds = null;
+		byte[] result = null;
 		try {
 			DefaultHttpClient http = new DefaultHttpClient();
 			HttpGet get = new HttpGet(url);
 			HttpResponse resp = http.execute(get);
 			HttpEntity entity = resp.getEntity();
-			opds = EntityUtils.toString(entity);
+			result = EntityUtils.toByteArray(entity);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return opds;
+		return result;
 	}
 
 }
