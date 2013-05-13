@@ -12,7 +12,7 @@ public class OpdsService extends Service {
 	
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		opdsTask = new OpdsAsynkTask(this, intent.getExtras().getInt(OpdsConstants.ACTION_ID));
-		opdsTask.execute(intent.getStringExtra("url"));
+		opdsTask.execute(intent.getStringExtra(OpdsConstants.URL_ID));
 	    return super.onStartCommand(intent, flags, startId);
 	  }
 
