@@ -18,8 +18,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	
+	static {
+		System.loadLibrary("test-jni");
+	}
 
 	private ListView listView;
 	private BooksAsynkTask booksTask;
@@ -77,6 +82,8 @@ public class MainActivity extends Activity {
 	private void init() {
 		navStack = new Stack<String>();
 	}
+	
+	public native String  stringFromJNI();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +99,9 @@ public class MainActivity extends Activity {
 		listView.setOnItemClickListener(goListener);
 		IntentFilter ifilter = new IntentFilter(OpdsConstants.BROADCAST_ACTION);
 		registerReceiver(breceiver, ifilter);
+		String jniString = stringFromJNI();
+		Toast toast = Toast.makeText(this, jniString, Toast.LENGTH_LONG);
+		toast.show();
 		useService(OpdsConstants.ROOT_URL);
 		navStack.push(OpdsConstants.ROOT_URL);
 	}
@@ -110,7 +120,7 @@ public class MainActivity extends Activity {
 	}
 	
 
-	/*@Override
+	@Override
 	public void onBackPressed() {
 		if (!navStack.isEmpty()) {
 			String url = navStack.pop();
@@ -119,20 +129,16 @@ public class MainActivity extends Activity {
 			super.onBackPressed();
 		}
 		return;
-	}*/
+	}
 	
-	@Override
+	/*@Override
+	for 1.6
 	public boolean onKeyDown (int keyCode, KeyEvent event){
 		if (keyCode == KeyEvent.KEYCODE_BACK && !navStack.isEmpty()){
 			useService(navStack.pop());
 			return true;
 		}
 		return false;
-	}
+	}*/
 
-    public native String  stringFromJNI();
-
-    static {
-        System.loadLibrary("hello-jni");
-    }
 }
