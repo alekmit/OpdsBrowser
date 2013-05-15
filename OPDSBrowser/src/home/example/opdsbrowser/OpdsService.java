@@ -10,12 +10,17 @@ public class OpdsService extends Service {
 	
 	private OpdsAsynkTask opdsTask;
 	
-	public int onStartCommand(Intent intent, int flags, int startId) {
+	/*public int onStartCommand(Intent intent, int flags, int startId) {
 		opdsTask = new OpdsAsynkTask(this, intent.getExtras().getInt(OpdsConstants.ACTION_ID));
 		opdsTask.execute(intent.getStringExtra(OpdsConstants.URL_ID));
 	    return super.onStartCommand(intent, flags, startId);
+	  }*/
+	
+	public void onStart(Intent intent, int startId) {
+		opdsTask = new OpdsAsynkTask(this, intent.getExtras().getInt(OpdsConstants.ACTION_ID));
+		opdsTask.execute(intent.getStringExtra(OpdsConstants.URL_ID));
 	  }
-
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;

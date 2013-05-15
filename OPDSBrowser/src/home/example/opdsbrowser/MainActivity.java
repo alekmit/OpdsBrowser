@@ -12,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -107,8 +108,9 @@ public class MainActivity extends Activity {
 		intent.putExtra(OpdsConstants.URL_ID, OpdsConstants.FLIBUSTA_URL + url);
 		startService(intent);
 	}
+	
 
-	@Override
+	/*@Override
 	public void onBackPressed() {
 		if (!navStack.isEmpty()) {
 			String url = navStack.pop();
@@ -117,6 +119,20 @@ public class MainActivity extends Activity {
 			super.onBackPressed();
 		}
 		return;
+	}*/
+	
+	@Override
+	public boolean onKeyDown (int keyCode, KeyEvent event){
+		if (keyCode == KeyEvent.KEYCODE_BACK && !navStack.isEmpty()){
+			useService(navStack.pop());
+			return true;
+		}
+		return false;
 	}
 
+    public native String  stringFromJNI();
+
+    static {
+        System.loadLibrary("hello-jni");
+    }
 }
