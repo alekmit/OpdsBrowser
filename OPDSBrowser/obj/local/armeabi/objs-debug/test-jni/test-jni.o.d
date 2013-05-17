@@ -40,7 +40,8 @@ obj/local/armeabi/objs-debug/test-jni/test-jni.o: jni/test-jni.c \
  C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include/linux/in6.h \
  C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include/linux/ipv6.h \
  C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include/netinet/in6.h \
- C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include/android/log.h
+ C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include/android/log.h \
+ C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include/netdb.h
 
 C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include/string.h:
 
@@ -125,3 +126,5 @@ C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include/linux/ipv6.h:
 C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include/netinet/in6.h:
 
 C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include/android/log.h:
+
+C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include/netdb.h:
