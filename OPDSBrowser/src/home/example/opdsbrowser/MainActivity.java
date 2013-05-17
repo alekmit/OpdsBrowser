@@ -84,10 +84,14 @@ public class MainActivity extends Activity {
 	}
 	
 	public native String  stringFromJNI();
+	
+	public native int testConnect();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		int tc = testConnect();
+		String tcMsg = tc > 0 ? "No network connection" : "Network connection is ok";
 		init();
 		setContentView(R.layout.activity_main);
 		/*
@@ -100,10 +104,14 @@ public class MainActivity extends Activity {
 		IntentFilter ifilter = new IntentFilter(OpdsConstants.BROADCAST_ACTION);
 		registerReceiver(breceiver, ifilter);
 		String jniString = stringFromJNI();
-		Toast toast = Toast.makeText(this, jniString, Toast.LENGTH_LONG);
+		Toast toast = Toast.makeText(this, jniString + "\n" + tcMsg, Toast.LENGTH_LONG);
 		toast.show();
-		useService(OpdsConstants.ROOT_URL);
-		navStack.push(OpdsConstants.ROOT_URL);
+		if (tc > 0){
+			finish();
+		} else {
+			useService(OpdsConstants.ROOT_URL);
+			navStack.push(OpdsConstants.ROOT_URL);
+		}
 	}
 
 	@Override

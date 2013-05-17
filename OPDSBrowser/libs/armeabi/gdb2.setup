@@ -1,0 +1,3 @@
+set solib-search-path ./obj/local/armeabi
+directory C:/android-ndk-r8e/platforms/android-5/arch-arm/usr/include C:/android-ndk-r8e/sources/cxx-stl/system jni
+target remote :5039
