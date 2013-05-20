@@ -5,14 +5,14 @@ import java.util.Stack;
 import home.example.opdsbrowser.R;
 import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.io.BooksAsynkTask;
-import home.example.opdsbrowser.utils.OpdsConstants;
+import static home.example.opdsbrowser.utils.OpdsConstants.*;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.view.KeyEvent;
+//import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,14 +35,14 @@ public class MainActivity extends Activity {
 		@Override
 		public void onReceive(Context ctx, Intent intent) {
 			Bundle bundle = intent.getExtras();
-			int action = intent.getExtras().getInt(OpdsConstants.ACTION_ID);
+			int action = intent.getExtras().getInt(ACTION_ID);
 			switch (action) {
-			case OpdsConstants.ID_ACTION_XML:
+			case ID_ACTION_XML:
 				String xml = new String(
-						bundle.getByteArray(OpdsConstants.ID_DATA));
+						bundle.getByteArray(ID_DATA));
 				startParser(xml);
 				break;
-			case OpdsConstants.ID_ACTION_BYTES:
+			case ID_ACTION_BYTES:
 				break;
 			}
 
@@ -101,7 +101,7 @@ public class MainActivity extends Activity {
 		 */
 		listView = (ListView) findViewById(R.id.listView1);
 		listView.setOnItemClickListener(goListener);
-		IntentFilter ifilter = new IntentFilter(OpdsConstants.BROADCAST_ACTION);
+		IntentFilter ifilter = new IntentFilter(BROADCAST_ACTION);
 		registerReceiver(breceiver, ifilter);
 		String jniString = stringFromJNI();
 		Toast toast = Toast.makeText(this, jniString + "\n" + tcMsg, Toast.LENGTH_LONG);
@@ -109,8 +109,8 @@ public class MainActivity extends Activity {
 		if (tc > 0){
 			finish();
 		} else {
-			useService(OpdsConstants.ROOT_URL);
-			navStack.push(OpdsConstants.ROOT_URL);
+			useService(ROOT_URL);
+			navStack.push(ROOT_URL);
 		}
 	}
 
@@ -122,8 +122,8 @@ public class MainActivity extends Activity {
 
 	private void useService(String url) {
 		Intent intent = new Intent(this, OpdsService.class);
-		intent.putExtra(OpdsConstants.ACTION_ID, OpdsConstants.ID_ACTION_XML);
-		intent.putExtra(OpdsConstants.URL_ID, OpdsConstants.FLIBUSTA_URL + url);
+		intent.putExtra(ACTION_ID, ID_ACTION_XML);
+		intent.putExtra(URL_ID, FLIBUSTA_URL + url);
 		startService(intent);
 	}
 	

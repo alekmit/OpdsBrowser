@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class BookWrapper implements Parcelable {
 	
-	public static final Parcelable.Creator PCreator = new Parcelable.Creator(){
+	/*public static final Parcelable.Creator PCreator = new Parcelable.Creator(){
 
 		@Override
 		public Object createFromParcel(Parcel source) {
@@ -24,7 +24,7 @@ public class BookWrapper implements Parcelable {
 	
 	private BookWrapper(Parcel parcel){
 		this.book = book;
-	}
+	}*/
 
 	@Override
 	public int describeContents() {
@@ -37,5 +37,4 @@ public class BookWrapper implements Parcelable {
 		// TODO Auto-generated method stub
 
 	}
-
 }

@@ -1,6 +1,6 @@
 package home.example.opdsbrowser.io;
 
-import home.example.opdsbrowser.utils.OpdsConstants;
+import static home.example.opdsbrowser.utils.OpdsConstants.*;
 
 import java.io.IOException;
 
@@ -26,9 +26,9 @@ public final class OpdsAsynkTask extends AsyncTask<String, Integer, byte[]> {
 
 	@Override
      protected void onPostExecute(byte[] result) {
-		Intent intent = new Intent(OpdsConstants.BROADCAST_ACTION);
-		intent.putExtra(OpdsConstants.ACTION_ID, action);
-		intent.putExtra(OpdsConstants.ID_DATA, result);
+		Intent intent = new Intent(BROADCAST_ACTION);
+		intent.putExtra(ACTION_ID, action);
+		intent.putExtra(ID_DATA, result);
 		context.sendBroadcast(intent);
      }
 

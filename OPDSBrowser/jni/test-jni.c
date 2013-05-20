@@ -35,8 +35,8 @@ int Java_home_example_opdsbrowser_MainActivity_testConnect()
 	 struct sockaddr_in addr;
 	 struct hostent* hs;
 	 const char* TEST_TAG = "connection test";
-	 const char* hostname = "flibusta.net";
-	 if ((hs = gethostbyname(hostname)) == NULL ) {
+	 const char* HOSTNAME = "flibusta.net";
+	 if ((hs = gethostbyname(HOSTNAME)) == NULL ) {
 	       return 1;
 	 }
 	 memcpy(&addr.sin_addr, hs->h_addr_list[0], hs->h_length);

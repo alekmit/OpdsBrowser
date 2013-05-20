@@ -3,12 +3,14 @@ package home.example.opdsbrowser.view;
 import home.example.opdsbrowser.R;
 import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.data.OpdsContext;
+import home.example.opdsbrowser.utils.OpdsUtils;
 
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,9 +57,10 @@ public class BookArrayAdapter extends ArrayAdapter<Book> {
 			viewItem = (ViewItem) row.getTag();
 		}
         Book book = (Book) getItem(position);
-        /*if (book.getImage() == null){
-        	setCover(book);
-        }*/
+        if (book.getImage() == null){
+        	ImageAsynkTask imageTask = new ImageAsynkTask(book, this);
+        	imageTask.execute(book.getCover());
+        }
         Bitmap pic = book.getImage();
         viewItem.cover.setImageBitmap(pic != null ? 
         		pic : OpdsContext.getContext().getImage());
@@ -78,12 +81,40 @@ public class BookArrayAdapter extends ArrayAdapter<Book> {
 		bmOpts.inSampleSize = 16;
 		try {
 			bitmap = BitmapFactory.decodeStream(
-					new URL(IOpdsService.FLIBUSTA_URL + imgUrl).openStream(), null, bmOpts);
+					new URL(FLIBUSTA_URL + imgUrl).openStream(), null, bmOpts);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		book.setImage(bitmap);
-		
 	}*/
+	
+	private static class ImageAsynkTask extends AsyncTask<String, Integer, Bitmap> {
+		
+		private BookArrayAdapter context;
+		private Book book;
+
+		ImageAsynkTask(Book book, BookArrayAdapter context){
+			this.book = book;
+			this.context = context;
+		}
+		
+		@Override
+	    protected void onPostExecute(Bitmap result) {
+			if (result != null){
+				book.setImage(result);
+				context.notifyDataSetChanged();
+			}
+		}
+
+		@Override
+		protected Bitmap doInBackground(String... args) {
+			String imgUrl = args[0];
+			if (imgUrl == null){
+				return null;
+			}
+			return OpdsUtils.getImage(imgUrl);
+		}
+		
+	}
 
 }
