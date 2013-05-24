@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:layout_alignParentTop="true"
     android:layout_toLeftOf="@+id/refreshBtn"
-    android:orientation="vertical"
+    android:orientation="vertical" 
     tools:context=".MainActivity" >
     
     <!--Button

@@ -1,8 +1,11 @@
 package home.example.opdsbrowser.data;
 
+import java.io.Serializable;
+
 import android.graphics.Bitmap;
 
-public final class Book {
+@SuppressWarnings("serial")
+public final class Book implements Serializable{
 
 	private String cover;
 	
@@ -22,6 +25,7 @@ public final class Book {
 	
 	private Bitmap image;
 	
+	private boolean isNode;
 
 	public String getCover() {
 		return cover;
@@ -93,6 +97,14 @@ public final class Book {
 
 	public void setImage(Bitmap image) {
 		this.image = image;
+	}
+
+	public boolean isNode() {
+		return isNode;
+	}
+
+	public void setNode(boolean isNode) {
+		this.isNode = isNode;
 	}
 
 }

@@ -112,7 +112,7 @@ public class BookArrayAdapter extends ArrayAdapter<Book> {
 			if (imgUrl == null){
 				return null;
 			}
-			return OpdsUtils.getImage(imgUrl);
+			return OpdsUtils.getImage(imgUrl, OpdsUtils.SCALE_ICON);
 		}
 		
 	}

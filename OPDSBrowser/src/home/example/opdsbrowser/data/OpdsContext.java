@@ -8,6 +8,8 @@ public class OpdsContext {
 	
 	private OpdsContext(){}
 	
+	private Book thisBook;
+	
 	public static OpdsContext getContext(){
 		return inst;
 	}
@@ -50,6 +52,14 @@ public class OpdsContext {
 
 	public void setImage(Bitmap image) {
 		this.image = image;
+	}
+
+	public Book getThisBook() {
+		return thisBook;
+	}
+
+	public void setThisBook(Book thisBook) {
+		this.thisBook = thisBook;
 	}
 
 }

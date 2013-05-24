@@ -4,7 +4,9 @@ import java.util.Stack;
 
 import home.example.opdsbrowser.R;
 import home.example.opdsbrowser.data.Book;
+import home.example.opdsbrowser.data.OpdsContext;
 import home.example.opdsbrowser.io.BooksAsynkTask;
+import home.example.opdsbrowser.view.OverviewActivity;
 import static home.example.opdsbrowser.utils.OpdsConstants.*;
 import android.os.Bundle;
 import android.app.Activity;
@@ -21,6 +23,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	
+	/*private static enum Views {
+		MAIN_LIST, VIEW_BOOK
+	}*/
 	
 	static {
 		System.loadLibrary("test-jni");
@@ -73,11 +79,23 @@ public class MainActivity extends Activity {
 				int position, long arg) {
 			Book b = (Book) listView.getAdapter().getItem(position);
 			String url = b.getLink();
-			useService(url);
+			if (!b.isNode()){
+				openBookView(b);
+			} else {
+				useService(url);
+			}
 			navStack.push(url);
 		}
 
 	};
+	
+	private void openBookView(Book b) {
+		//setVisibleView(Views.VIEW_BOOK);
+		OpdsContext.getContext().setThisBook(b);
+		Intent intent = new Intent(this, OverviewActivity.class);
+		//intent.putExtra("book", b);
+		startActivity(intent);
+	}
 
 	private void init() {
 		navStack = new Stack<String>();
@@ -94,6 +112,7 @@ public class MainActivity extends Activity {
 		String tcMsg = tc > 0 ? "No network connection" : "Network connection is ok";
 		init();
 		setContentView(R.layout.activity_main);
+		//setVisibleView(Views.MAIN_LIST);
 		/*
 		 * Button refbtn = (Button) findViewById(R.id.refreshBtn);
 		 * refbtn.setOnClickListener(refreshListener);
@@ -113,7 +132,12 @@ public class MainActivity extends Activity {
 			navStack.push(ROOT_URL);
 		}
 	}
-
+	
+/*	private void setVisibleView(Views v){
+		findViewById(R.id.main_list_layout).setVisibility(v == Views.MAIN_LIST ? View.VISIBLE : View.INVISIBLE);
+		findViewById(R.id.overview_layout).setVisibility(v == Views.VIEW_BOOK ? View.VISIBLE : View.INVISIBLE);
+	}
+*/
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);

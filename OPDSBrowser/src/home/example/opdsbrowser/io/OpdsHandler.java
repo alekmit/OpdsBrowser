@@ -49,6 +49,8 @@ public final class OpdsHandler extends DefaultHandler {
 			book = null;
 		} else if (is(qname, XML_TITLE)){
 			book.setTitle(value);
+		} else if (is(qname, XML_ID)){
+			book.setNode(!value.startsWith("tag:book"));
 		}
 	}
 

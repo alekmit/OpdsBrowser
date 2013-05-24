@@ -44,7 +44,7 @@ public final class BooksAsynkTask extends AsyncTask<String, Integer, List<Book>>
 		}
 		String icon = OpdsContext.getContext().getIcon();
 		if (OpdsContext.getContext().getImage() == null && icon != null){
-			OpdsContext.getContext().setImage(OpdsUtils.getImage(icon));
+			OpdsContext.getContext().setImage(OpdsUtils.getImage(icon, OpdsUtils.SCALE_THUMP));
 		}
 		/*for (Book book : books) {
 			String imgUrl = book.getCover();

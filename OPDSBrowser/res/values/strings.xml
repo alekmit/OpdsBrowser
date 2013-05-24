@@ -6,5 +6,6 @@
     <string name="refresh">refresh</string>
     <string name="cover">cover</string>
     <string name="icon">icon</string>
+    <string name="download">Download</string>
 
 </resources>
