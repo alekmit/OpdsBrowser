@@ -10,12 +10,12 @@ import home.example.opdsbrowser.view.OverviewActivity;
 import home.example.opdsbrowser.view.OverviewFragment;
 import static home.example.opdsbrowser.utils.OpdsConstants.*;
 import android.os.Bundle;
-import android.app.Activity;
+//import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-//import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 //import android.view.KeyEvent;
@@ -26,7 +26,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 	
 	/*private static enum Views {
 		MAIN_LIST, VIEW_BOOK
@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
 	
 	private void openBookView(Book b) {
 		OpdsContext.getContext().setThisBook(b);
-		openBookViewAsActivity(b);
+		openBookViewAsFragment(b);
 	}
 	
 	@Override
@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
 	
 	private void openBookViewAsFragment(Book b){
 		fTransaction = fManager.beginTransaction();
-		fTransaction.add(new OverviewFragment(), null);
+		fTransaction.add(android.R.id.content, new OverviewFragment());
 		fTransaction.commit();
 	}
 	
@@ -125,7 +125,7 @@ public class MainActivity extends Activity {
 		String tcMsg = tc > 0 ? "No network connection" : "Network connection is ok";
 		init();
 		setContentView(R.layout.activity_main);
-		//fManager = getSupportFragmentManager();
+		fManager = getSupportFragmentManager();
 		listView = (ListView) findViewById(R.id.listView1);
 		listView.setOnItemClickListener(goListener);
 		IntentFilter ifilter = new IntentFilter(BROADCAST_ACTION);
