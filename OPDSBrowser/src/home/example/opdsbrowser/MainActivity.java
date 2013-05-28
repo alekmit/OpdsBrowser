@@ -15,7 +15,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v4.app.FragmentActivity;
+//import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 //import android.view.KeyEvent;
@@ -93,6 +93,12 @@ public class MainActivity extends Activity {
 		openBookViewAsActivity(b);
 	}
 	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(breceiver);
+	}
+
 	private void openBookViewAsActivity(Book b){
 		Intent intent = new Intent(this, OverviewActivity.class);
 		startActivity(intent);
