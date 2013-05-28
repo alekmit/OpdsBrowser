@@ -25,12 +25,12 @@ public class OverviewActivity extends Activity {
     	imageTask.execute(b.getCover());
 	}
 	
-	private void downloadBook(String url){
-		/*DownloadManager.Request dr = new DownloadManager.Request(url);
+	/*private void downloadBook(String url){
+		DownloadManager.Request dr = new DownloadManager.Request(url);
 		dr.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "fileName");
 		dr.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 		DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-		dm.enqueue(dr);*/
-	}
+		dm.enqueue(dr);
+	}*/
 
 }
