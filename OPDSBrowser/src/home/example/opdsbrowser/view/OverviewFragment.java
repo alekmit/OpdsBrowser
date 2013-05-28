@@ -15,6 +15,7 @@ public class OverviewFragment extends Fragment {
 
 	@Override
 	public void onStart() {
+		super.onStart();
 		Book b = OpdsContext.getContext().getThisBook();
 		ImageView cover = (ImageView) getView().findViewById(R.id.info_cover);
 		TextView author = (TextView) getView().findViewById(R.id.info_author);
