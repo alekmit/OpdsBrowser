@@ -18,13 +18,13 @@ import org.xml.sax.XMLReader;
 import android.app.Activity;
 import android.os.AsyncTask;
 
-public final class BooksAsynkTask extends AsyncTask<String, Integer, List<Book>> {
+public final class BooksAsyncTask extends AsyncTask<String, Integer, List<Book>> {
 
 	private Activity activity;
 
 	private BookArrayAdapter listAdapter;
 
-	public BooksAsynkTask(Activity activity) {
+	public BooksAsyncTask(Activity activity) {
 		this.activity = activity;
 	}
 

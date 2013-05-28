@@ -5,8 +5,9 @@ import java.util.Stack;
 import home.example.opdsbrowser.R;
 import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.data.OpdsContext;
-import home.example.opdsbrowser.io.BooksAsynkTask;
+import home.example.opdsbrowser.io.BooksAsyncTask;
 import home.example.opdsbrowser.view.OverviewActivity;
+import home.example.opdsbrowser.view.OverviewFragment;
 import static home.example.opdsbrowser.utils.OpdsConstants.*;
 import android.os.Bundle;
 import android.app.Activity;
@@ -14,6 +15,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 //import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -33,7 +37,10 @@ public class MainActivity extends Activity {
 	}
 
 	private ListView listView;
-	private BooksAsynkTask booksTask;
+	private BooksAsyncTask booksTask;
+	
+	private FragmentManager fManager;
+	private FragmentTransaction fTransaction;
 
 	private Stack<String> navStack = new Stack<String>();
 
@@ -56,21 +63,13 @@ public class MainActivity extends Activity {
 	};
 
 	private void startParser(String xml) {
-		booksTask = new BooksAsynkTask(this);
+		booksTask = new BooksAsyncTask(this);
 		booksTask.execute(xml);
 	}
 
 	public ListView getListView() {
 		return listView;
 	}
-
-	/*
-	 * private OnClickListener refreshListener = new OnClickListener() {
-	 * 
-	 * @Override public void onClick(View view) { }
-	 * 
-	 * };
-	 */
 
 	OnItemClickListener goListener = new OnItemClickListener() {
 
@@ -90,13 +89,21 @@ public class MainActivity extends Activity {
 	};
 	
 	private void openBookView(Book b) {
-		//setVisibleView(Views.VIEW_BOOK);
 		OpdsContext.getContext().setThisBook(b);
+		openBookViewAsActivity(b);
+	}
+	
+	private void openBookViewAsActivity(Book b){
 		Intent intent = new Intent(this, OverviewActivity.class);
-		//intent.putExtra("book", b);
 		startActivity(intent);
 	}
-
+	
+	private void openBookViewAsFragment(Book b){
+		fTransaction = fManager.beginTransaction();
+		fTransaction.add(new OverviewFragment(), null);
+		fTransaction.commit();
+	}
+	
 	private void init() {
 		navStack = new Stack<String>();
 	}
@@ -112,12 +119,7 @@ public class MainActivity extends Activity {
 		String tcMsg = tc > 0 ? "No network connection" : "Network connection is ok";
 		init();
 		setContentView(R.layout.activity_main);
-		//setVisibleView(Views.MAIN_LIST);
-		/*
-		 * Button refbtn = (Button) findViewById(R.id.refreshBtn);
-		 * refbtn.setOnClickListener(refreshListener);
-		 * refbtn.setVisibility(Button.INVISIBLE);
-		 */
+		//fManager = getSupportFragmentManager();
 		listView = (ListView) findViewById(R.id.listView1);
 		listView.setOnItemClickListener(goListener);
 		IntentFilter ifilter = new IntentFilter(BROADCAST_ACTION);

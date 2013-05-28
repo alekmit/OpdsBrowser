@@ -1,11 +1,8 @@
 package home.example.opdsbrowser.data;
 
-import java.io.Serializable;
-
 import android.graphics.Bitmap;
 
-@SuppressWarnings("serial")
-public final class Book implements Serializable{
+public final class Book {
 
 	private String cover;
 	

@@ -16,6 +16,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
+APP_PLATFORM := android-5
 APP_OPTIM := debug
 LOCAL_LDLIBS := -llog
 

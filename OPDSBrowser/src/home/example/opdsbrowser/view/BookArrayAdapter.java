@@ -3,6 +3,7 @@ package home.example.opdsbrowser.view;
 import home.example.opdsbrowser.R;
 import home.example.opdsbrowser.data.Book;
 import home.example.opdsbrowser.data.OpdsContext;
+import home.example.opdsbrowser.utils.AbstractImageAsyncTask;
 import home.example.opdsbrowser.utils.OpdsUtils;
 
 import java.util.List;
@@ -88,12 +89,13 @@ public class BookArrayAdapter extends ArrayAdapter<Book> {
 		book.setImage(bitmap);
 	}*/
 	
-	private static class ImageAsynkTask extends AsyncTask<String, Integer, Bitmap> {
+	private static class ImageAsynkTask extends AbstractImageAsyncTask {
 		
 		private BookArrayAdapter context;
 		private Book book;
 
 		ImageAsynkTask(Book book, BookArrayAdapter context){
+			super(OpdsUtils.SCALE_ICON);
 			this.book = book;
 			this.context = context;
 		}
@@ -104,15 +106,6 @@ public class BookArrayAdapter extends ArrayAdapter<Book> {
 				book.setImage(result);
 				context.notifyDataSetChanged();
 			}
-		}
-
-		@Override
-		protected Bitmap doInBackground(String... args) {
-			String imgUrl = args[0];
-			if (imgUrl == null){
-				return null;
-			}
-			return OpdsUtils.getImage(imgUrl, OpdsUtils.SCALE_ICON);
 		}
 		
 	}

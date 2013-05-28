@@ -14,12 +14,12 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-public final class OpdsAsynkTask extends AsyncTask<String, Integer, byte[]> {
+public final class OpdsAsyncTask extends AsyncTask<String, Integer, byte[]> {
 
 	private Service context;
 	private int action;
 
-	public OpdsAsynkTask(Service context, int action) {
+	public OpdsAsyncTask(Service context, int action) {
 		this.context = context;
 		this.action = action;
 	}
